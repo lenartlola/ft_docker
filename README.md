@@ -2,6 +2,17 @@
 
 **Trying to make my own docker in golang.**
 
+## Usage:
+```sh
+sudo go run main.go run /bin/sh
+```
+
+## Dependencies:
+- vagrant
+  ```shell
+pacman -Syu vagrant
+```
+
 ## Namespaces:
 Namespaces are one of a feature in the Linux Kernel and fundamental aspect of containers on Linux. On the other hand, namespaces provide a layer of isolation. 
 

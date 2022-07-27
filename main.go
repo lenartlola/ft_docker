@@ -9,37 +9,22 @@ import (
 )
 
 func parent() {
+	fmt.Printf("PID %d\n", os.Getpid())
 	cmd := exec.Command("/proc/self/exe", append([]string{"child"}, os.Args[2:]...)...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{
-		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS,
-	}
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+	cmd.SysProcAttr = &syscall.SysProcAttr{
+		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS,
+	}
 
 	if err := cmd.Run(); err != nil {
-		fmt.Println("ERROR", err)
-		os.Exit(1)
+		log.Fatal("Error in parent")
 	}
 }
 
 func child() {
-	err := syscall.Mount("rootfs", "rootfs", "", syscall.MS_BIND, "")
-	if err != nil {
-		return
-	}
-	err = os.MkdirAll("rootfs/oldrootfs", 0700)
-	if err != nil {
-		return
-	}
-	err = syscall.PivotRoot("rootfs", "rootfs/oldrootfs")
-	if err != nil {
-		return
-	}
-	err = os.Chdir("/")
-	if err != nil {
-		return
-	}
+	fmt.Printf("PID %d\n", os.Getpid())
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
