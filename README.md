@@ -9,7 +9,7 @@ sudo go run main.go run /bin/sh
 
 ## Dependencies:
 - vagrant
-  ```shell
+```shell
 pacman -Syu vagrant
 ```
 
@@ -22,6 +22,7 @@ From wikipedia:
 > another set of processes sees a different set of resources. The feature
 > works by having the same namespace for a group of resources and
 > processes, but those namespaces refer to distinct resources.
+
 
 ### Namespace Types:
 1) Process ID or PID: When a process is created on most Unix-like operating systems, it is given a specific numeric identifier called PID. PID helps to identify a process uniquely even if there are two process that share the same human-readable name.
